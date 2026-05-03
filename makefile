@@ -10,6 +10,16 @@ $(BUILD):
 $(BUILD)/kernel_entry.o: kernel/arch/kernel_entry.asm | $(BUILD)
 	nasm -f elf32 $< -o $@
 
+$(BUILD)/isr.o: kernel/arch/isr.asm | $(BUILD)
+	nasm -f elf32 $< -o $@
+
+# ARCH =======================================================================
+$(BUILD)/idt.o: kernel/arch/idt.c | $(BUILD)
+	gcc -m32 -ffreestanding -c $< -o $@
+
+$(BUILD)/handler.o: kernel/arch/handler.c | $(BUILD)
+	gcc -m32 -ffreestanding -c $< -o $@
+
 # CORE =======================================================================
 $(BUILD)/kernel.o: kernel/core/kernel.c | $(BUILD)
 	gcc -m32 -ffreestanding -c $< -o $@
@@ -19,7 +29,7 @@ $(BUILD)/vga.o: kernel/drivers/video/vga.c | $(BUILD)
 	gcc -m32 -ffreestanding -c $< -o $@
 
 # LINK =======================================================================
-$(BUILD)/kernel.elf: $(BUILD)/kernel_entry.o $(BUILD)/kernel.o $(BUILD)/vga.o
+$(BUILD)/kernel.elf: $(BUILD)/kernel_entry.o $(BUILD)/kernel.o $(BUILD)/vga.o $(BUILD)/idt.o $(BUILD)/isr.o $(BUILD)/handler.o
 	ld -m elf_i386 -T linker.ld -o $@ $^
 
 # ISO ========================================================================
