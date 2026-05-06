@@ -16,21 +16,26 @@ En desarrollo temprano - actualmente bootea y muestra texto en pantalla via VGA.
 ```txt
 .
 ├── kernel
-│   ├── arch/ -> **Entry point de assembly**
+│   ├── arch **Entry point de assembly**
+│   │   ├── handler.c
+│   │   ├── idt.c
+│   │   ├── idt.h
+│   │   ├── isr.asm
 │   │   └── kernel_entry.asm
-│   ├── core/ -> **Aqui va el kernel principal**
+│   ├── core **Aqui va el kernel principal**
 │   │   └── kernel.c
-│   ├── drivers/ -> **Drivers de hardware**
-│   │   └── video/ -> **Drivers VGA**
+│   ├── drivers **Drivers de hardware**
+│   │   └── video **Drivers VGA**
 │   │       ├── vga.c
 │   │       └── vga.h
-│   └── include/ -> **Tipos y definiciones**
+│   └── include **Tipos y definiciones**
 │       └── types.h
-├── linker.ld -> **Script del linker**
+├── linker.ld **Script del linker**
 ├── makefile
-├── os
+├── os **Configuracion de GRUB**
 │   └── grub.cfg
 └── README.md
+
 ```
 
 ## Requisitos
@@ -49,8 +54,8 @@ make run [Corre el ISO en qemu 32 bits]
 ```
 
 ## Roadmap
-- [ ] GDT
-- [ ] IDT e Interrupciones
+- [] GDT
+- [x] IDT e Interrupciones
 - [ ] Driver de teclado
 - [ ] Manejo de memoria
 - [ ] Scheduler
